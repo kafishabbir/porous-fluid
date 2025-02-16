@@ -16,7 +16,7 @@ namespace decl
 
 	const std::string compile_command_object = "g++ -c -Wall -std=c++17 -Isrc/ ";
 	const std::string compile_command_exe = "g++ ";
-	const std::string input_file_name = "file-structure.txt";
+	const std::string input_file_name = "makefile-gen-config.txt";
 
 	const std::vector<std::string> folder_exist_check
 	{

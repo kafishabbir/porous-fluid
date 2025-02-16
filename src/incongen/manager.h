@@ -6,11 +6,10 @@
 
 namespace incongen
 {
-	const std::string PROGRAM_NAME = "incongen: INitial_CONditions_GENerator";
-
 	class Manager
 	{
-
+		inline static const std::string PROGRAM_NAME = "incongen: INitial_CONditions_GENerator";
+		
 	public:
 		static void run();
 	};
