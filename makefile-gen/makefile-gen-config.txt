@@ -1,37 +1,33 @@
 algo/determine
 algo/utility
 
+config_file/head
+config_file/incongen
+config_file/simulation
+
 drw/bmp
 
-
-dst/incongen-config
-dst/simulation-config
-dst/simulation-input
-dst/simulation-state
+dst/head
 
 exe/incongen
 exe/plot
 exe/simulate
 exe/test
 
-head/decl
-head/type
+global/head
 
 incongen/manager
 incongen/garbage
-incongen/fromfile
-incongen/fromcmd
+incongen/parameter
 incongen/tradius
 incongen/tlength
 incongen/tmns
-incongen/parameter
 
 io/cmdprint     
 io/cmdread
 io/fileplot
 io/fileread
 io/filewrite
-
 
 math/gausslinear
 math/random
@@ -40,7 +36,6 @@ measure/measure
 
 network/dimension
 network/mns
-
 
 simulate/manager
 

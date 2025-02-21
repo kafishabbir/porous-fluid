@@ -9,7 +9,7 @@ namespace decl
 	const std::string path_src_folder = "src/";
 	const std::string path_run_folder = "run/";
 	const std::string path_build_folder = path_run_folder + "build/";
-	
+
 	const std::string terminal_mkdir = "mkdir -p " ;
 	const std::string terminal_rmrf = "rm -rf ";
 	const std::string terminal_geany_open = "geany -i ";
@@ -32,7 +32,7 @@ namespace decl
 		path_run_folder + "output/pressure",
 		path_run_folder + "output/velocity",
 		path_run_folder + "output/visualization-nothick",
-		path_run_folder + "output/visualization-thick",
+		path_run_folder + "output/visualization-thick"
 	};
 }
 

@@ -1,14 +1,14 @@
 #include "dst/meniscus.h"
 
-dst::Mns::Mns(): n(0), type(1), pos(2) {} //by default everything is the defending fluid
+network::Mns::Mns(): n(0), type(1), pos(2) {} //by default everything is the defending fluid
 
-dst::Mns::Mns(const int n, const bool type,
+network::Mns::Mns(const int n, const bool type,
 	const double p1,	const double p2):
 	n(n), type(type), pos{p1, p2} {}
 
 
 // Part-0 Universial Functions
-std::vector<double> dst::Mns::gen_pos_long() const
+std::vector<double> network::Mns::gen_pos_long() const
 {
 	/* generate positions long version
 	 *
@@ -34,7 +34,7 @@ std::vector<double> dst::Mns::gen_pos_long() const
 }
 
 
-std::vector<double> dst::Mns::gen_pos_long_rev() const
+std::vector<double> network::Mns::gen_pos_long_rev() const
 {
 	std::vector<double> pos = gen_pos_long();
 	for(double& x: pos)
@@ -48,14 +48,14 @@ std::vector<double> dst::Mns::gen_pos_long_rev() const
 }
 
 
-bool dst::Mns::type_rev() const
+bool network::Mns::type_rev() const
 {
 	const int t = this->type;
 	return (this->n + t) % 2;
 }
 
 // Part-1 Linear Equations and pressure determination
-int dst::Mns::sign_of_capll_pressure(int direction) const
+int network::Mns::sign_of_capll_pressure(int direction) const
 {
 	/*
 	 * Direction	|	Type	|	Product
@@ -78,7 +78,7 @@ int dst::Mns::sign_of_capll_pressure(int direction) const
 		(n % 2); // {even} = sign_of_capll_pressure = 0;
 }
 
-double dst::Mns::true_is_minus_one(bool condition)
+double network::Mns::true_is_minus_one(bool condition)
 {
 	if(condition)
 	{
@@ -88,7 +88,7 @@ double dst::Mns::true_is_minus_one(bool condition)
 	return 1;
 }
 
-double dst::Mns::mu(const double mu1, const double mu2) const
+double network::Mns::mu(const double mu1, const double mu2) const
 {
 	std::vector<double> mu_vec{mu1, mu2};
 	const auto pos_long = gen_pos_long();
@@ -133,7 +133,7 @@ double dst::Mns::mu(const double mu1, const double mu2) const
 
 // Part-3 Distribution --------------------------------------------------------
 
-bool dst::Mns::is_the_flow_from_tube_into_node(const int direction,
+bool network::Mns::is_the_flow_from_tube_into_node(const int direction,
 	const double velocity)
 {
 	/*
@@ -155,7 +155,7 @@ bool dst::Mns::is_the_flow_from_tube_into_node(const int direction,
 	return (direction < 2) ^ (velocity >= 0);
 }
 
-int dst::Mns::type_from_vel(const double vel) const
+int network::Mns::type_from_vel(const double vel) const
 {
 	if(vel < 0)
 	{
@@ -166,7 +166,7 @@ int dst::Mns::type_from_vel(const double vel) const
 }
 
 
-int dst::Mns::type_from_direction(const int direction) const
+int network::Mns::type_from_direction(const int direction) const
 {
 	if(direction > 1)
 	{
@@ -176,7 +176,7 @@ int dst::Mns::type_from_direction(const int direction) const
 	return type;
 }
 
-std::vector<double> dst::Mns::pos_from_direction(const int direction) const
+std::vector<double> network::Mns::pos_from_direction(const int direction) const
 {
 	if(direction > 1)
 	{
@@ -187,7 +187,7 @@ std::vector<double> dst::Mns::pos_from_direction(const int direction) const
 	return gen_pos_long();
 }
 
-std::vector<double> dst::Mns::pos_from_vel(const double vel) const
+std::vector<double> network::Mns::pos_from_vel(const double vel) const
 {
 	if(vel < 0)
 	{
@@ -198,7 +198,7 @@ std::vector<double> dst::Mns::pos_from_vel(const double vel) const
 	return gen_pos_long();
 }
 
-std::vector<double> dst::Mns::pos_fluid_into_nodes(
+std::vector<double> network::Mns::pos_fluid_into_nodes(
 	const int direction, const double pos_length) const
 {
 	const std::vector<double> pos = pos_from_direction(direction);
@@ -217,7 +217,7 @@ std::vector<double> dst::Mns::pos_fluid_into_nodes(
 	return fluid;
 }
 
-std::vector<double> dst::Mns::vol_fluid_into_nodes(
+std::vector<double> network::Mns::vol_fluid_into_nodes(
 	const double radius,
 	const int direction,
 	const double velocity,
@@ -243,7 +243,7 @@ std::vector<double> dst::Mns::vol_fluid_into_nodes(
 
 
 // Part-4 Update --------------------------------------------------------------
-void dst::Mns::update(
+void network::Mns::update(
 	const double vel,
 	const double rad,
 	const std::vector<double>& add
@@ -284,7 +284,7 @@ void dst::Mns::update(
 	}
 }
 
-std::vector<double> dst::Mns::cmprt_to_vector(const dst::Mns::Cmprt& cmprt)
+std::vector<double> network::Mns::cmprt_to_vector(const network::Mns::Cmprt& cmprt)
 {
 	std::vector<double> v;
 	double sum = 0;
@@ -298,7 +298,7 @@ std::vector<double> dst::Mns::cmprt_to_vector(const dst::Mns::Cmprt& cmprt)
 	return v;
 }
 
-dst::Mns::Cmprt dst::Mns::gen_cmprt_addition(
+network::Mns::Cmprt network::Mns::gen_cmprt_addition(
 	const double l1,
 	const double l2
 ) const
@@ -318,7 +318,7 @@ dst::Mns::Cmprt dst::Mns::gen_cmprt_addition(
 }
 
 
-dst::Mns::Cmprt dst::Mns::gen_cmprt_existing(
+network::Mns::Cmprt network::Mns::gen_cmprt_existing(
 	double vel,
 	double dspl
 ) const
@@ -353,10 +353,10 @@ dst::Mns::Cmprt dst::Mns::gen_cmprt_existing(
 	return compartments;
 }
 
-dst::Mns::Cmprt dst::Mns::merge_existing_and_cmprt_addition
+network::Mns::Cmprt network::Mns::merge_existing_and_cmprt_addition
 (
-	dst::Mns::Cmprt& cmprt_existing,
-	dst::Mns::Cmprt& cmprt_addition,
+	network::Mns::Cmprt& cmprt_existing,
+	network::Mns::Cmprt& cmprt_addition,
 	double vel
 )
 {
@@ -370,7 +370,7 @@ dst::Mns::Cmprt dst::Mns::merge_existing_and_cmprt_addition
 	return cmprt_addition;
 }
 
-dst::Mns::Cmprt dst::Mns::remove_dupl_cmprt(const dst::Mns::Cmprt& cmprt_merged)
+network::Mns::Cmprt network::Mns::remove_dupl_cmprt(const network::Mns::Cmprt& cmprt_merged)
 {
 	Cmprt cmprt_without_dupl;
 
@@ -395,7 +395,7 @@ dst::Mns::Cmprt dst::Mns::remove_dupl_cmprt(const dst::Mns::Cmprt& cmprt_merged)
 }
 
 
-dst::Mns::PosNew_Type_Result dst::Mns::centre_of_mass_recombination
+network::Mns::PosNew_Type_Result network::Mns::centre_of_mass_recombination
 (
 	const bool type_begin,
 	const std::vector<double>& pos_new
@@ -441,7 +441,7 @@ dst::Mns::PosNew_Type_Result dst::Mns::centre_of_mass_recombination
 	return {new_type_begin, centre_of_mass_equation(l1, l2, l3, l4)};
 }
 
-std::vector<double> dst::Mns::centre_of_mass_equation
+std::vector<double> network::Mns::centre_of_mass_equation
 (
 	const double l1,
 	const double l2,
@@ -463,7 +463,7 @@ std::vector<double> dst::Mns::centre_of_mass_equation
 }
 
 // Part-5 Measurement ---------------------------------------------------------
-double dst::Mns::sum_type_first() const
+double network::Mns::sum_type_first() const
 {
 	const auto pos_long = gen_pos_long();
 	double sum = 0;
@@ -477,7 +477,7 @@ double dst::Mns::sum_type_first() const
 	return sum;
 }
 
-int dst::Mns::type_near_node(const int direction) const
+int network::Mns::type_near_node(const int direction) const
 {
 	if(direction > 1)
 	{
@@ -489,7 +489,7 @@ int dst::Mns::type_near_node(const int direction) const
 
 // Part-6 Printing and Reading mns overloads ---------------------------------
 
-double dst::Mns::printable() const
+double network::Mns::printable() const
 {
 	const auto amount_type_first = sum_type_first();
 	const auto amount_type_second = 1.0f - amount_type_first;
@@ -500,30 +500,30 @@ double dst::Mns::printable() const
 	return -amount_type_second * 100;
 }
 
-std::ifstream& operator>> (std::ifstream& fin, dst::Mns& val)
+std::ifstream& operator>> (std::ifstream& fin, network::Mns& val)
 {
 	fin >> val.n >> val.type >> val.pos.front() >> val.pos.back();
 	return fin;
 }
 
-std::ofstream& operator<< (std::ofstream& fout, const dst::Mns& val)
+std::ofstream& operator<< (std::ofstream& fout, const network::Mns& val)
 {
 	fout << '\n' << val.n << ' ' << val.type << ' ' << val.pos.front() << ' ' << val.pos.back();
 	return fout;
 }
 
-std::istream& operator>> (std::istream& cin, dst::Mns& mns)
+std::istream& operator>> (std::istream& cin, network::Mns& mns)
 {
 	std::cout << " Mns, (int n, bool type, double pos1, double pos2): ";
 
-	dst::Mns ipt;
+	network::Mns ipt;
 	cin >> ipt.n >> ipt.type >> ipt.pos.front() >> ipt.pos.back();
 	mns = ipt;
 
 	return cin;
 }
 
-std::ostream& operator<< (std::ostream& cout, const dst::Mns& mns)
+std::ostream& operator<< (std::ostream& cout, const network::Mns& mns)
 {
 	std::cout << "[n=" << mns.n << ", t=" << mns.type << ", pos=" << mns.pos.front() << ", " << mns.pos.back() << "]";
 	return cout;

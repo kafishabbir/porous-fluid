@@ -25,13 +25,14 @@ std::pair<std::string, std::string> Menu::split(const std::string& s)
 Menu::file_type Menu::determine_type(const std::string& file)
 {
 	const std::string& parent_folder = split(file).first;
+	const std::string& file_name = split(file).second;
 
 	if(parent_folder == "exe")
 	{
 		return file_type_exe;
 	}
 
-	if(parent_folder == "head")
+	if(file_name == "head")
 	{
 		return file_type_head;
 	}

@@ -9,7 +9,7 @@
 //~ #include <algorithm>
 //~ #include <cmath>
 
-namespace dst
+namespace network
 {
 	class Mns
 	{
@@ -93,8 +93,8 @@ namespace dst
 	};
 }
 
-std::ifstream& operator>> (std::ifstream& fin, dst::Mns& val);
-std::ofstream& operator<< (std::ofstream& fout, const dst::Mns& val);
-std::istream& operator>> (std::istream& cin, dst::Mns& mns);
-std::ostream& operator<< (std::ostream& cout, const dst::Mns& mns);
+std::ifstream& operator>> (std::ifstream& fin, network::Mns& val);
+std::ofstream& operator<< (std::ofstream& fout, const network::Mns& val);
+std::istream& operator>> (std::istream& cin, network::Mns& mns);
+std::ostream& operator<< (std::ostream& cout, const network::Mns& mns);
 #endif
