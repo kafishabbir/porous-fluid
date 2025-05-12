@@ -1,59 +1,35 @@
-#ifndef HEAD_DECLS_H
-#define HEAD_DECLS_H
+#ifndef DST_HEAD_H
+#define DST_HEAD_H
 
-#include <cmath>
-#include <limits>
-#include <string>
-// Handbook of physical constants:
-// sigma = 7.56e-2 water at 20C in SI units
-// mu_water = 1e-3 viscosity in SI units
+#include "network/mns.h"
+#include "network/dimension.h"
+#include "config_file/simulation.h"
 
-
-
-namespace decl
+namespace dst
 {
-	namespace file
-	{
-		namespace input
-		{
-			const std::string FOLDER = "input/";
-			const std::string RADIUS = FOLDER + "tradius.txt";
-			const std::string LENGTH = FOLDER + "tlength.txt";
-			const std::string MNS = FOLDER + "tmns.txt";
-			const std::string PARAMETER = FOLDER + "parameter.txt";
-			const std::string INCONGEN = FOLDER + "incongen.txt";
-		}
+	typedef std::vector<std::vector<double>> Tradius;
+	typedef std::vector<std::vector<double>> Tlength;
+	typedef std::vector<std::vector<double>> Tdouble;
+	typedef std::vector<std::vector<network::Mns>> Tmns;
 
-		namespace output
-		{
-			const std::string FOLDER = "result/";
-			const std::string CALCULATION = FOLDER + "calculation/";
-			const std::string GRAPH = FOLDER + "graph/";
-			const std::string INITIAL = FOLDER + "initial/";
-			const std::string NORADIUS = FOLDER + "noradius/";
-			const std::string PRESSURE = FOLDER + "pressure/";
-			const std::string THICK = FOLDER + "thick/";
-			const std::string VELOCITY = FOLDER + "velocity/";
-		}
-	}
-
-	namespace math
+	struct SimulationInput
 	{
-		const double PI = std::acos(-1);
-		const double HUGE = std::numeric_limits<double>::max();
-	}
+		Tradius tradius;
+		Tlength tlength;
+		Tmns tmns;
+		network::Dimension dimension;
+		config_file::Simulation simulation_config;
+	};
 
-	namespace computation
-	{
-		const double TRIMMER_PRECISION = 1e-6; // FINDOUT
-		const double TIME_DIV = 10;	// resolution while selecting time step
-		const double IGNORE_VEL = 1e8; // If any velocity in the porous body is IGNORE_VEL times less than the max velocity then it is forced to be 0
-	}
 
-	namespace plot
+	struct SimulationConstState
 	{
-		const int IMAGE_SIZE = 1000;
-	}
+		Tradius tradius;
+		Tlength tlength;
+		config_file::Simulation simulation_config;
+		network::Dimension dimension;
+	};
+
 }
 
 #endif

@@ -1,10 +1,9 @@
 #ifndef IO_FILEREAD_H
 #define IO_FILEREAD_H
 
-#include "network/dimension.h"
-#include "dst/parameter.h"
-#include "dst/inputfiles.h"
-#include "dst/txtincongen.h"
+#include "dst/head.h"
+#include "global/head.h"
+#include "config_files/incongen.h"
 
 
 namespace io
@@ -14,17 +13,49 @@ namespace io
 
 		template<class T>
 		static std::pair<std::vector<std::vector<T>>, bool> table(
-			const std::string& file_name);
+			const std::string& file_name
+		);
+
+		template<class T>
+		static std::pair<T, bool> config_file_template(
+			const std::string& file_name
+		);
 
 	public:
-		static std::pair<dst::TxtIncongen, bool> txt_incongen();
-		static std::pair<tdouble_type, bool> radius();
-		static std::pair<tmns_type, bool> mns();
-		static std::pair<tdouble_type, bool> length();
-		static std::pair<dst::Parameter, bool> parameter();
-		static std::pair<dst::InputFiles, bool> all();
+		static std::pair<config_file::Simulation, bool> simulation_config();
+		static std::pair<config_file::Incongen, bool> incongen_config();
+		static std::pair<dst::Tlength, bool> tlength();
+		static std::pair<dst::Tradius, bool> tradius();
+		static std::pair<dst::Tmns, bool> tmns();
+		static std::pair<dst::SimulationInput, bool> simulation_input();
 
 	};
+}
+
+
+template<class T>
+std::pair<T, bool> io::FileRead::config_file_template(const std::string& file_name)
+{
+	T buffer;
+	std::ifstream fin(file_name);
+	if(!fin)
+	{
+		std::cout << "-ERR- cound not open " << file_name << std::endl;
+		return {buffer, false};
+	}
+
+	std::string buffer_line;
+	while(fin >> buffer_line)
+	{
+		const bool success = buffer.set(buffer_line);
+		if(!success)
+		{
+			std::cout << "-ERR- " << file_name
+				<< " is corrupted, failure reading" << buffer_str << std::endl;
+			return {buffer, false};
+		}
+	}
+	return {buffer, buffer.valid()};
 }
 
 template<class T>
@@ -48,7 +79,6 @@ std::pair<std::vector<std::vector<T>>, bool> io::FileRead::table(const std::stri
 	{
 		buffer_vec.push_back(ipt);
 	}
-
 
 	if(buffer_vec.size() != size_t(rows * cols))
 	{

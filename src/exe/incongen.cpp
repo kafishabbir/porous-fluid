@@ -3,8 +3,8 @@
 /**
  * @file exe/incongen
  * @brief incongen.exe - initial conditions generator
- * Compiles into an executablem therefore contains int main()
- * incongen::Mannager::run() to start the program.
+ * Compiles into an executable therefore contains int main()
+ * incongen::Manager::run() to start the program.
  *
  * In simple,
  * 		reads run/input/incongen-config.txt

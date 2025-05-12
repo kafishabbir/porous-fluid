@@ -1,6 +1,6 @@
-#include "dst/incongen-config.h"
+#include "config_file/incongen.h"
 
-bool dst::IncongenConfig::valid() const
+bool config_file::Incongen::valid() const
 {
 	const bool validity =
 		nrows_set &&
@@ -12,73 +12,80 @@ bool dst::IncongenConfig::valid() const
 	return validity;
 }
 
-bool dst::IncongenConfig::set(const std::string& buffer_line)
+bool config_file::Incongen::set(const std::string& buffer_line)
 {
-	const std::string& cat = algo::Utility::split(buffer_line).first;
-	const std::string& val = algo::Utility::split(buffer_line).second;
+	const std::pair<std::string, std::string>& buffer =
+		algo::Utility::split(buffer_line);
 
-	if(cat == "nrows")
+	const std::string& category = buffer.first;
+	const std::string& value = buffer.second;
+
+	if(category == "nrows")
 	{
-		return set_nrows(val);
+		return set_nrows(value);
 	}
-	if(cat == "ncols")
+	if(category == "ncols")
 	{
-		return set_ncols(val);
+		return set_ncols(value);
 	}
-	if(cat == "tradius")
+	if(category == "tradius")
 	{
-		return set_tradius(val);
+		return set_tradius(value);
 	}
-	if(cat == "tlength")
+	if(category == "tlength")
 	{
-		return set_tlength(val);
+		return set_tlength(value);
 	}
-	if(cat == "tmns")
+	if(category == "tmns")
 	{
-		return set_tmns(val);
+		return set_tmns(value);
 	}
 
 	std::cout << "-Err- in incongen-config.txt, category not recognized";
 	return false;
 }
 
-bool dst::IncongenConfig::set_nrows(const std::string& val)
+bool config_file::Incongen::set_nrows(const std::string& value)
 {
-	nrows = std::stoi(val);
+	nrows = std::stoi(value);
 	nrows_set = true;
 
 	return true;
 }
 
-bool dst::IncongenConfig::set_ncols(const std::string& val)
+bool config_file::Incongen::set_ncols(const std::string& value)
 {
-	ncols = std::stoi(val);
+	ncols = std::stoi(value);
 	ncols_set = true;
 
 	return true;
 
 }
 
-std::pair<double, bool> dst::IncongenConfig::const_extraction(
+std::pair<double, bool> config_file::Incongen::const_extraction(
 	const std::string& s
 )
 {
 	const std::string c = "constant";
 	if(s.size() < c.size())
 	{
+		return {-1, false};
+	}
 
 	if(s.substr(0, c.size()) != c)
 	{
 		return {-1, false};
 	}
 
-	return {std::stod(algo::Utility::split(s).second), true};
+	const double value_double = std::stod(algo::Utility::split(s).second);
+
+	return {value_double, true};
 }
 
-bool dst::IncongenConfig::set_tradius(const std::string& val)
+bool config_file::Incongen::set_tradius(const std::string& value)
 {
 	const std::pair<double, bool> try_const =
-		const_extraction(val);
+		const_extraction(value);
 
 	if(try_const.second)
 	{
@@ -88,28 +95,28 @@ bool dst::IncongenConfig::set_tradius(const std::string& val)
 		return true;
 	}
 
-	if(val == "imbibition")
+	if(value == "imbibition")
 	{
 		tradius.first = val_tradius::imbibiton;
 		tradius_set = true;
 		return true;
 	}
 
-	if(val == "function")
+	if(value == "function")
 	{
 		tradius.first =  val_tradius::function;
 		tradius_set = true;
 		return true;
 	}
 
-	std::cout << "-Err- set_tradius(), value not recognized." << std::endl;
+	std::cout << "-Err- config_file::set_tradius(), value not recognized." << std::endl;
 	return false;
 }
 
-bool dst::IncongenConfig::set_tlength(const std::string& val)
+bool config_file::Incongen::set_tlength(const std::string& value)
 {
 	const std::pair<double, bool> try_const =
-		const_extraction(val);
+		const_extraction(value);
 
 	if(try_const.second)
 	{
@@ -119,40 +126,40 @@ bool dst::IncongenConfig::set_tlength(const std::string& val)
 		return true;
 	}
 
-	if(val == "inverse_radius")
+	if(value == "inverse_radius")
 	{
-		tlength.first =  val_tlength::function;
+		tlength.first =  val_tlength::inverse_radius;
 		tlength_set = true;
 		return true;
 	}
 
-	std::cout << "-Err- set_tlength(), value not recognized." << std::endl;
+	std::cout << "-Err- config_file::set_tlength(), value not recognized." << std::endl;
 	return false;
 }
 
-bool dst::IncongenConfig::set_tmns(const std::string& val)
+bool config_file::Incongen::set_tmns(const std::string& value)
 {
-	if(val == "saturate_oil")
+	if(value == "saturate_oil")
 	{
-		tmns.first =  val_tmns::saturate_oil;
+		tmns =  val_tmns::saturate_oil;
 		tmns_set = true;
 		return true;
 	}
 
-	if(val == "saturate_water")
+	if(value == "saturate_water")
 	{
-		tmns.first =  val_tmns::saturate_water;
+		tmns =  val_tmns::saturate_water;
 		tmns_set = true;
 		return true;
 	}
 
-	if(val == "imbibition")
+	if(value == "imbibition")
 	{
-		tmns.first =  val_tmns::imbibition;
+		tmns =  val_tmns::imbibition;
 		tmns_set = true;
 		return true;
 	}
 
-	std::cout << "-Err- set_tmns(), value not recognized." << std::endl;
+	std::cout << "-Err- config_file::set_tmns(), value not recognized." << std::endl;
 	return false;
 }

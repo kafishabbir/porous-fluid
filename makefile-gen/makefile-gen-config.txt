@@ -1,7 +1,6 @@
 algo/determine
 algo/utility
 
-config_file/head
 config_file/incongen
 config_file/simulation
 

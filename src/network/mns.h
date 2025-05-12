@@ -1,7 +1,6 @@
-#ifndef MNS_H
-#define MNS_H
+#ifndef NETWORK_MNS_H
+#define NETWORK_MNS_H
 
-#include "head/decl.h"
 #include <list>
 #include <vector>
 #include <fstream>

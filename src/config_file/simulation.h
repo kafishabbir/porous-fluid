@@ -1,28 +1,32 @@
-#ifndef DST_PARAMETER_H
-#define DST_PARAMETER_H
+#ifndef CONFIG_FILE_SIMULATION_H
+#define CONFIG_FILE_SIMULATION_H
 
-#include <string>
+#include "algo/utility.h"
+#include <iostream>
 
-namespace dst
+namespace config_file
 {
-	namespace decls_parameter_nps
-	{
-		const std::string sigma = "sigma";
-		const std::string mu_water = "mu_water";
-		const std::string mu_oil = "mu_oil";
-		const std::string total_volumetric_flow_rate = "total_volumetric_flow_rate";
 
-	}
-	class SimulationConfig
+	class Simulation
 	{
+		static const std::string sigma_str;
+		static const std::string mu_water_str;
+		static const std::string mu_oil_str;
+		static const std::string total_volumetric_flow_rate_str;
+
+		bool sigma_set = false;
+		bool mu_water_set = false;
+		bool mu_oil_set = false;
+		bool total_volumetric_flow_rate_set = false;
+
 	public:
 		double sigma;
 		double mu_water;
 		double mu_oil;
 		double total_volumetric_flow_rate;
 
-		//CHANGE_LATER i do not like how it is being set, it hsould be set the same way as in dst/txtinconged
-		bool set(const std::string& name_parameter, const double val);
+		bool set(const std::string& buffer_line);
+		bool valid() const;
 	};
 }
 

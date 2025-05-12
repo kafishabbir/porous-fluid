@@ -1,5 +1,5 @@
-#ifndef HEAD_DECLS_H
-#define HEAD_DECLS_H
+#ifndef GLOBAL_HEAD_H
+#define GLOBAL_HEAD_H
 
 #include <cmath>
 #include <limits>
@@ -10,30 +10,35 @@
 
 
 
-namespace decl
+namespace global
 {
 	namespace file
 	{
 		namespace input
 		{
-			const std::string FOLDER = "input/";
+			const std::string FOLDER = "run/input/";
 			const std::string RADIUS = FOLDER + "tradius.txt";
 			const std::string LENGTH = FOLDER + "tlength.txt";
 			const std::string MNS = FOLDER + "tmns.txt";
-			const std::string PARAMETER = FOLDER + "parameter.txt";
-			const std::string INCONGEN = FOLDER + "incongen.txt";
+			const std::string SIMULATION_CONFIG = FOLDER + "simulation_config.txt";
+			const std::string INCONGEN_CONFIG = FOLDER + "incongen_config.txt";
 		}
 
 		namespace output
 		{
-			const std::string FOLDER = "result/";
-			const std::string CALCULATION = FOLDER + "calculation/";
+			const std::string FOLDER = "run/output/";
+			const std::string CALCULATIONS = FOLDER + "calculations/";
+			const std::string DATA_RAW = FOLDER + "data-raw/";
+
 			const std::string GRAPH = FOLDER + "graph/";
-			const std::string INITIAL = FOLDER + "initial/";
-			const std::string NORADIUS = FOLDER + "noradius/";
+
+			const std::string INITIAL_CONDITIONS = FOLDER + "initial-conditions/";
 			const std::string PRESSURE = FOLDER + "pressure/";
-			const std::string THICK = FOLDER + "thick/";
 			const std::string VELOCITY = FOLDER + "velocity/";
+
+			const std::string VISUALIZATION_THICK = FOLDER + "visualization-thick/";
+			const std::string VISUALIZATION_NOTHICK  = FOLDER + "visualization-thick/";
+
 		}
 	}
 

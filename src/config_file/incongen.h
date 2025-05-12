@@ -1,5 +1,5 @@
-#ifndef DST_INCONGEN_CONFIG_H
-#define DST_INCONGEN_CONFIG_H
+#ifndef CONFIG_FILE_INCONGEN_H
+#define CONFIG_FILE_INCONGEN_H
 
 #include "algo/utility.h"
 #include <vector>
@@ -16,9 +16,9 @@
  * tmns = {saturate_oil, saturate_water, imbibition}
  */
 
-namespace dst
+namespace config_file
 {
-	class IncongenConfig
+	class Incongen
 	{
 		bool nrows_set = false;
 		bool ncols_set = false;
@@ -26,13 +26,14 @@ namespace dst
 		bool tlength_set = false;
 		bool tmns_set = false;
 
-		bool set_nrows();
-		bool set_ncols();
-		bool set_tradius();
-		bool set_tlength();
-		bool set_tmns();
+		bool set_nrows(const std::string& value);
+		bool set_ncols(const std::string& value);
+		bool set_tradius(const std::string& value);
+		bool set_tlength(const std::string& value);
+		bool set_tmns(const std::string& value);
 
 		static std::pair<double, bool> const_extraction(const std::string& s);
+
 	public:
 		enum class val_tradius {constant, imbibiton, function};
 		enum class val_tlength {constant, inverse_radius};
